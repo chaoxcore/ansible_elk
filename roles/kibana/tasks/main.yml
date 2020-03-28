@@ -1,0 +1,20 @@
+- name: copy kibana rpm package
+  copy:
+    src: kibana-7.6.1-x86_64.rpm
+    dest: /opt/kibana-7.6.1-x86_64.rpm
+
+- name: install kibana
+  yum:
+    name: /opt/kibana-7.6.1-x86_64.rpm
+    state: present
+
+- name: copy kibana conf
+  template:
+    src: kibana.yml.j2 
+    dest: /etc/kibana/kibana.yml
+
+- name: start kibana
+  service:
+    name: kibana
+    state: started
+    enabled: yes

@@ -1,0 +1,15 @@
+[elk]
+10.0.0.100
+10.0.0.102
+10.0.0.103
+
+[zookeeper_servers]
+zk01 ansible_host=10.0.0.100 myid=1
+zk02 ansible_host=10.0.0.102 myid=2
+zk03 ansible_host=10.0.0.103 myid=3
+
+[kafka_servers]
+kafka1 ansible_host=10.0.0.100  id=1
+kafka2 ansible_host=10.0.0.102  id=2
+kafka3 ansible_host=10.0.0.103  id=3
+

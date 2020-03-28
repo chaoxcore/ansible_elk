@@ -1,0 +1,28 @@
+- name: unarchive kafka
+  unarchive:
+    src: kafka_2.13-2.4.1.tgz
+    dest: /opt/
+
+- name: create kafka's symbolic link
+  file:
+    src: /opt/kafka_2.13-2.4.1
+    dest: /opt/kafka
+    state: link
+
+- name: copy kafka conf
+  template:
+    src: server.properties.j2
+    dest: /opt/kafka/config/server.properties
+
+- name: copy kafka systemctl file
+  copy:
+    src: kafka.service
+    dest: /etc/systemd/system/kafka.service
+  notify:
+    daemon reload
+
+- name: create kafka log directory
+  file:
+    path: /data/kafka-logs
+    state: directory
+

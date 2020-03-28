@@ -1,0 +1,3 @@
+- hosts: kafka_servers
+  roles:
+    - kafka

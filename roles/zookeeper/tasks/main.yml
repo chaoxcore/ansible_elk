@@ -1,0 +1,30 @@
+- name: unarchive zookeeper
+  unarchive:
+    src: apache-zookeeper-3.6.0-bin.tar.gz
+    dest: /opt/
+
+- name: create zookeeper's symbolic link
+  file:
+    src: /opt/apache-zookeeper-3.6.0-bin
+    dest: /opt/zookeeper
+    state: link
+
+- name: copy zookeeper conf
+  template:
+    src: zoo.cfg.j2
+    dest: /opt/zookeeper/conf/zoo.cfg
+
+- name: create data directory
+  file:
+    path: /data/zookeeper
+    state: directory
+
+- name: copy myid file
+  template:
+    src: myid.j2
+    dest: /data/zookeeper/myid
+
+- name: copy zookeeper systemd file
+  template:
+    src: zookeeper.service.j2
+    dest: /etc/systemd/system/zookeeper.service

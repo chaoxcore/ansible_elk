@@ -1,0 +1,20 @@
+- name: copy filebeat rpm package
+  copy:
+    src: filebeat-7.6.1-x86_64.rpm
+    dest: /opt/filebeat-7.6.1-x86_64.rpm
+
+- name: install filebeat
+  yum:
+    name: /opt/filebeat-7.6.1-x86_64.rpm
+    state: present
+
+- name: copy filebeat conf
+  copy:
+    src: filebeat.yml
+    dest: /etc/filebeat/filebeat.yml
+
+- name: start filebeat
+  service:
+    name: filebeat
+    state: started
+    enabled: yes

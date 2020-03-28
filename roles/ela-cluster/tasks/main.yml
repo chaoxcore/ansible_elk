@@ -1,0 +1,26 @@
+- name: install java 
+  yum:
+    name: java
+    state: installed
+
+- name: copy elasticsearch rpm package
+  copy:
+    src: elasticsearch-7.6.1-x86_64.rpm
+    dest: /opt/elasticsearch-7.6.1-x86_64.rpm
+
+- name: install elasticsearch
+  yum: 
+    name: /opt/elasticsearch-7.6.1-x86_64.rpm
+    state: present
+
+- name: copy elasticsearch conf
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+
+- name: start elasticsearch
+  service:
+    name: elasticsearch
+    state: started
+    enabled: yes
+

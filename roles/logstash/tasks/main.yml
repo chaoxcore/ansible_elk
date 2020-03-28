@@ -1,0 +1,23 @@
+- name: copy logstash rpm package
+  copy:
+    src: logstash-7.6.1.rpm
+    dest: /opt/logstash-7.6.1.rpm
+
+- name: install logstash
+  yum:
+    name: /opt/logstash-7.6.1.rpm
+    state: present
+
+- name: copy lostash conf
+  copy: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - { src: 'redis_nginx.conf',dest: '/etc/logstash/conf.d/redis_nginx.conf' }
+    - { src: 'kafka_nginx.conf',dest: '/etc/logstash/conf.d/kafka_nginx.conf' }
+  
+- name: start logstash
+  service:
+    name: logstash
+    state: started
+    enabled: yes
